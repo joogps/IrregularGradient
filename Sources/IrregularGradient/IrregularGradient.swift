@@ -8,10 +8,15 @@
 import SwiftUI
 
 public struct IrregularGradientView: View {
-    @State var colors: [Color]
-    var backgroundColor: Color = .clear
+    var colors: [Color]
+    var backgroundColor: Color
+    var animate: Binding<Bool>
     
-    var animate: Binding<Bool> = .constant(true)
+    public init(colors: [Color], backgroundColor: Color = .clear, animate: Binding<Bool> = .constant(true)) {
+        self.colors = colors
+        self.backgroundColor = backgroundColor
+        self.animate = animate
+    }
     
     public var body: some View {
         GeometryReader { geometry in
@@ -72,7 +77,7 @@ struct IrregularGradient_Previews: PreviewProvider {
         
         var body: some View {
             VStack {
-                RoundedRectangle(cornerRadius: 40.0, style: .continuous).irregularGradient(colors: [Color(red: 191/255, green: 187/255, blue: 184/255), Color(red: 153/255, green: 114/255, blue: 108/255), Color(red: 191/255, green: 187/255, blue: 184/255)], backgroundColor: Color(red: 183/255, green: 72/255, blue: 49/255), animate: $animate)
+                RoundedRectangle(cornerRadius: 40.0, style: .continuous).irregularGradient(colors: [.yellow, .pink, .orange, .pink, .orange, .yellow], backgroundColor: .orange, animate: $animate)
                 Toggle(isOn: $animate, label: {
                     Text("Animate")
                 }).padding()
