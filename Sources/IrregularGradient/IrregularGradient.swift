@@ -1,13 +1,13 @@
 //
 //  IrregularGradient.swift
-//  IrregularGradient
+//
 //
 //  Created by João Gabriel Pozzobon dos Santos on 01/12/20.
 //
 
 import SwiftUI
 
-public struct IrregularGradient: View {
+public struct IrregularGradientView: View {
     @State var colors: [Color]
     var backgroundColor: Color = .clear
     
@@ -28,7 +28,7 @@ public struct IrregularGradient: View {
 
 extension View {
     public func irregularGradient(colors: [Color], backgroundColor: Color = .clear, animate: Binding<Bool> = .constant(true)) -> some View {
-        self.overlay(IrregularGradient(colors: colors, backgroundColor: backgroundColor, animate: animate)).mask(self)
+        self.overlay(IrregularGradientView(colors: colors, backgroundColor: backgroundColor, animate: animate)).mask(self)
     }
 }
 
