@@ -12,7 +12,7 @@ public struct IrregularGradientView: View {
     var backgroundColor: Color
     var animate: Binding<Bool>
     
-    init(colors: [Color], backgroundColor: Color = .clear, animate: Binding<Bool> = .constant(true)) {
+    public init(colors: [Color], backgroundColor: Color = .clear, animate: Binding<Bool> = .constant(true)) {
         self.colors = colors
         self.backgroundColor = backgroundColor
         self.animate = animate
