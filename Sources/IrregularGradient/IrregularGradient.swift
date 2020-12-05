@@ -21,12 +21,13 @@ public struct IrregularGradientView: View {
     public var body: some View {
         GeometryReader { geometry in
             ZStack {
-                ForEach(0..<colors.count) { index in
-                    Blob(color: colors[index], animate: animate.wrappedValue, geometry: geometry)
-                }
-            }.blur(radius: 65)
-            .clipped()
-            .background(backgroundColor)
+                backgroundColor
+                ZStack {
+                    ForEach(0..<colors.count) { index in
+                        Blob(color: colors[index], animate: animate.wrappedValue, geometry: geometry)
+                    }
+                }.blur(radius: 65)
+            }.clipped()
         }
     }
 }
