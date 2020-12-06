@@ -44,7 +44,7 @@ struct Blob: View {
     var geometry: GeometryProxy
     
     @State var position: CGPoint = CGPoint(x: CGFloat.random(in: 0...1), y: CGFloat.random(in: 0...1))
-    @State var scale: CGSize = CGSize(width: CGFloat.random(in: 0.5...2), height: CGFloat.random(in: 0.5...2))
+    @State var scale: CGSize = CGSize(width: CGFloat.random(in: 0.5...1.75), height: CGFloat.random(in: 0.5...1.75))
     
     let timer = Timer.publish(every: Double.random(in: 2...5), on: .main, in: .common).autoconnect()
     
@@ -63,7 +63,7 @@ struct Blob: View {
     func update() {
         if animate {
             position = CGPoint(x: CGFloat.random(in: 0...1), y: CGFloat.random(in: 0...1))
-            scale = CGSize(width: CGFloat.random(in: 0.5...2), height: CGFloat.random(in: 0.5...2))
+            scale = CGSize(width: CGFloat.random(in: 0.5...1.75), height: CGFloat.random(in: 0.5...1.75))
         }
     }
 }
