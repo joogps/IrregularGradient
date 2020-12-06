@@ -41,14 +41,14 @@ struct Blob: View {
     var geometry: GeometryProxy
     
     @State var position: CGPoint = CGPoint(x: CGFloat.random(in: 0...1), y: CGFloat.random(in: 0...1))
-    @State var scale: CGSize = CGSize(width: CGFloat.random(in: 0...2), height: CGFloat.random(in: 0...2))
+    @State var scale: CGSize = CGSize(width: CGFloat.random(in: 0...1), height: CGFloat.random(in: 0...1))
     
     let timer = Timer.publish(every: Double.random(in: 2...4), on: .main, in: .common).autoconnect()
     
     var body: some View {
-        Circle()
+        Ellipse()
             .fill(color)
-            .position(x: position.x*geometry.size.width, y: position.y*geometry.size.height)
+            .position(position.applying(CGAffineTransform(scaleX: geometry.size.width, y: geometry.size.height)))
             .scaleEffect(scale)
             .animation(.spring(response: speed))
             .onAppear(perform: update)
