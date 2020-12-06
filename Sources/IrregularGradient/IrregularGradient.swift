@@ -43,15 +43,24 @@ struct Blob: View {
     var animate: Bool
     var geometry: GeometryProxy
     
-    @State var position: CGPoint = CGPoint(x: CGFloat.random(in: 0...1), y: CGFloat.random(in: 0...1))
-    @State var scale: CGSize = CGSize(width: CGFloat.random(in: 0.5...1.75), height: CGFloat.random(in: 0.5...1.75))
+    @State var position: CGPoint = CGPoint()
+    @State var scale: CGSize = CGSize()
+    
+    init(color: Color, animate: Bool, geometry: GeometryProxy) {
+        self.color = color
+        self.animate = animate
+        self.geometry = geometry
+        
+        position = randomPoint()
+        scale = randomSize()
+    }
     
     let timer = Timer.publish(every: Double.random(in: 2...5), on: .main, in: .common).autoconnect()
     
     var body: some View {
         Circle()
             .fill(color)
-            .position(x: position.x*geometry.size.width, y: position.y*geometry.size.width)
+            .position(x: position.x*geometry.size.width, y: position.y*geometry.size.height)
             .scaleEffect(scale)
             .animation(.spring(response: 10, dampingFraction: 0.3))
             .onAppear(perform: update)
@@ -62,9 +71,17 @@ struct Blob: View {
     
     func update() {
         if animate {
-            position = CGPoint(x: CGFloat.random(in: 0...1), y: CGFloat.random(in: 0...1))
-            scale = CGSize(width: CGFloat.random(in: 0.5...1.75), height: CGFloat.random(in: 0.5...1.75))
+            position = randomPoint()
+            scale = randomSize()
         }
+    }
+    
+    func randomPoint() -> CGPoint {
+        return CGPoint(x: CGFloat.random(in: 0...1), y: CGFloat.random(in: 0...1))
+    }
+    
+    func randomSize() -> CGSize {
+        return CGSize(width: CGFloat.random(in: 0.5...1.75), height: CGFloat.random(in: 0.5...1.75))
     }
 }
 
@@ -74,7 +91,7 @@ struct IrregularGradient_Previews: PreviewProvider {
     }
     
     struct PreviewWrapper: View {
-        @State var animate = false
+        @State var animate = true
         
         var body: some View {
             VStack {
