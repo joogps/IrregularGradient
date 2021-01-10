@@ -1,4 +1,4 @@
-# IrregularGradient
+<img src="../assets/title.gif" height=80 alt="IrregularGradient"/>
 <p>
     <img src="https://img.shields.io/badge/iOS-13.0+-blue.svg" />
     <img src="https://img.shields.io/badge/-SwiftUI-red.svg" />
