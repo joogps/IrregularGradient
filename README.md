@@ -20,11 +20,15 @@ To use this library all you gotta do is add `import IrregularGradient` to the fi
 - The first argument (and the only required one) `colors` specifies the colors of each gradient blob. Order and quantity matters, so the last color you add will always stay on top, and having two blues will create two separate blue blobs.
 - The `backgroundColor` argument defines the background color of your gradient, which will occupy the full container (not specifying it will make it transparent). 
 - `animate` is a boolean binding that specifies wheter or not the gradient should perform its natural movement. It can be enabled and disabled dinamically, but movement will never stop abruptly.
-- The `speed` argument accepts a double and defines how fast the blobs move and update.
+- The `speed` argument accepts a Double and defines how fast the blobs move and update.
 
 ```swift
 RoundedRectangle(cornerRadius: 30.0, style: .continuous)
     .irregularGradient(colors: [.orange, .pink, .yellow, .orange, .pink, .yellow], backgroundColor: .orange)
 ```
 
-You can also use  `IrregularGradientView` which works the exact same way except for the fact that instead of filling an already existing view, it is its own container.
+You can also use the `IrregularGradientView` which works the exact same way except for the fact that instead of filling an already existing view, it exists in its own container.
+
+### Questions
+
+If you have any questions or suggestions, you can create an issue on this repo or even contact me via Twitter or email!
