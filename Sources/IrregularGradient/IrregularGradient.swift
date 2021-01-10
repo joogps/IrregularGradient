@@ -6,6 +6,7 @@
 //
 
 import SwiftUI
+import Combine
 
 public struct IrregularGradientView: View {
     var colors: [Color]
@@ -43,14 +44,23 @@ struct Blob: View {
     @State var position: CGPoint = CGPoint(x: CGFloat.random(in: 0...1), y: CGFloat.random(in: 0...1))
     @State var scale: CGSize = CGSize(width: CGFloat.random(in: 0...1), height: CGFloat.random(in: 0...1))
     
-    let timer = Timer.publish(every: Double.random(in: 2...4), on: .main, in: .common).autoconnect()
+    let timer: Publishers.Autoconnect<Timer.TimerPublisher>
+    
+    init(color: Color, animate: Bool, speed: Double, geometry: GeometryProxy) {
+        self.color = color
+        self.animate = animate
+        self.speed = speed
+        self.geometry = geometry
+        
+        self.timer = Timer.publish(every: speed/Double.random(in: 2...5), on: .main, in: .common).autoconnect()
+    }
     
     var body: some View {
         Ellipse()
             .fill(color)
             .position(position.applying(CGAffineTransform(scaleX: geometry.size.width, y: geometry.size.height)))
             .scaleEffect(scale)
-            .animation(.spring(response: speed))
+            .animation(.spring(response: speed*Double.random(in: 0.8...1.25)))
             .onAppear(perform: update)
             .onReceive(timer) { _ in
                 update()
