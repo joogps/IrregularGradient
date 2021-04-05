@@ -15,20 +15,20 @@ Since this is a Swift package, it can be installed via the Swift Package Manager
 
 ## Usage
 
-To use this library all you gotta do is add `import IrregularGradient` to the file you're using and then add an irregular gradient to any view you want with the `irregularGradient(colors: [Color], backgroundColor: Color = .clear, animate: Binding<Bool> = .constant(true), speed: Double = 10)` modifier. 
+To use this library all you gotta do is add `import IrregularGradient` to the file you're using and then add an irregular gradient to any view you want with the `irregularGradient(colors: [Color], background: () -> View, shouldAnimate: Binding<Bool> = .constant(true), speed: Double = 10)` modifier. 
 
-- The first argument (and the only required one) `colors` specifies the colors of each gradient blob. Order and quantity matters, so the last color you add will always stay on top, and having two blues will create two separate blue blobs.
-- The `backgroundColor` argument defines the background color of your gradient, which will occupy the full container (not specifying it will make it transparent). 
-- `animate` is a boolean binding that specifies wheter or not the gradient should perform its natural movement. It can be enabled and disabled dinamically, but movement will never stop abruptly.
-- The `speed` argument accepts a Double and defines how fast the blobs move and update.
+- The first argument (and the only required one) `colors` specifies the colors of each gradient blob. Order and quantity matters, so the last color you add will always stay on top, and having two entries of the same color will create two distinct blue blobs.
+- The `background` argument defines the background of your gradient. It's a closure that returns a view, but can also just be a simple color if you use `backgroundColor` instead. Not specifying this value it will make the background transparent. 
+- `shouldAnimate` is a boolean binding that specifies wheter or not the gradient should perform its natural movement. It can be enabled and disabled dinamically, but movement will never stop abruptly.
+- The `speed` argument accepts a Double and defines how long it takes for the blobs to move and update. The smaller the value, the faster the movement.
 
 ```swift
 RoundedRectangle(cornerRadius: 30.0, style: .continuous)
     .irregularGradient(colors: [.orange, .pink, .yellow, .orange, .pink, .yellow], backgroundColor: .orange)
 ```
 
-You can also use the `IrregularGradientView` which works the exact same way except for the fact that instead of filling an already existing view, it exists in its own container.
+You can also use the `IrregularGradient` view which works the exact same way except for the fact that instead of filling an already existing view, it exists in its own container.
 
 ### Questions
 
-If you have any questions or suggestions, you can create an issue on this repo or even contact me via Twitter or email!
+If you have any questions or suggestions, you can create an issue or pull request on this GitHub repository or even contact me via [Twitter](https://twitter.com/joogps) or [email](joogps@gmail.com).

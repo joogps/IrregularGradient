@@ -56,7 +56,7 @@ struct IrregularGradient_Previews: PreviewProvider {
         
         var body: some View {
             VStack {
-                RoundedRectangle(cornerRadius: 40.0, style: .continuous)
+                RoundedRectangle(cornerRadius: 30.0, style: .continuous)
                     .irregularGradient(colors: [.orange, .pink, .yellow, .orange, .pink, .yellow], backgroundColor: .orange, shouldAnimate: $animate)
                 Toggle("Animate", isOn: $animate)
                     .padding()
