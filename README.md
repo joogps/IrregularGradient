@@ -31,4 +31,4 @@ You can also use the `IrregularGradient` view which works the exact same way exc
 
 ### Questions
 
-If you have any questions or suggestions, you can create an issue or pull request on this GitHub repository or even contact me via [Twitter](https://twitter.com/joogps) or [email](joogps@gmail.com).
+If you have any questions or suggestions, you can create an issue or pull request on this GitHub repository or even contact me via [Twitter](https://twitter.com/joogps) or [email](mailto:joogps@gmail.com).
