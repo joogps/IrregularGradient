@@ -8,76 +8,41 @@
 import SwiftUI
 import Combine
 
-public struct IrregularGradientView: View {
+public struct IrregularGradient<Background: View>: View {
     var colors: [Color]
-    var backgroundColor: Color
-    var animate: Binding<Bool>
+    var background: Background
     var speed: Double
+    var shouldAnimate: Binding<Bool>
     
-    public init(colors: [Color], backgroundColor: Color = .clear, animate: Binding<Bool> = .constant(true), speed: Double = 10) {
+    public init(colors: [Color], background: @autoclosure @escaping () -> Background, speed: Double = 10, shouldAnimate: Binding<Bool> = .constant(true)) {
         self.colors = colors
-        self.backgroundColor = backgroundColor
-        self.animate = animate
+        self.background = background()
+        self.shouldAnimate = shouldAnimate
         self.speed = speed
     }
     
     public var body: some View {
         GeometryReader { geometry in
             ZStack {
-                backgroundColor
+                background
                 ZStack {
                     ForEach(0..<colors.count) { index in
-                        Blob(color: colors[index], animate: animate.wrappedValue, speed: speed, geometry: geometry)
+                        Blob(color: colors[index], animate: shouldAnimate.wrappedValue, speed: speed, geometry: geometry)
                     }
-                }.blur(radius: pow(min(geometry.size.width, geometry.size.height), 0.75))
-            }.clipped()
-        }
-    }
-}
-
-struct Blob: View {
-    var color: Color
-    var animate: Bool
-    var speed: Double
-    var geometry: GeometryProxy
-    
-    @State var position: CGPoint = CGPoint(x: CGFloat.random(in: 0...1), y: CGFloat.random(in: 0...1))
-    @State var scale: CGSize = CGSize(width: CGFloat.random(in: 0...1), height: CGFloat.random(in: 0...1))
-    
-    let timer: Publishers.Autoconnect<Timer.TimerPublisher>
-    
-    init(color: Color, animate: Bool, speed: Double, geometry: GeometryProxy) {
-        self.color = color
-        self.animate = animate
-        self.speed = speed
-        self.geometry = geometry
-        
-        self.timer = Timer.publish(every: speed/Double.random(in: 2...5), on: .main, in: .common).autoconnect()
-    }
-    
-    var body: some View {
-        Ellipse()
-            .fill(color)
-            .position(position.applying(CGAffineTransform(scaleX: geometry.size.width, y: geometry.size.height)))
-            .scaleEffect(scale)
-            .animation(.spring(response: speed*Double.random(in: 0.8...1.25)))
-            .onAppear(perform: update)
-            .onReceive(timer) { _ in
-                update()
+                }
+                .blur(radius: pow(min(geometry.size.width, geometry.size.height), 0.75))
             }
-    }
-    
-    func update() {
-        if animate {
-            position = CGPoint(x: CGFloat.random(in: 0...1), y: CGFloat.random(in: 0...1))
-            scale = CGSize(width: CGFloat.random(in: 0...2), height: CGFloat.random(in: 0...2))
+            .clipped()
         }
     }
 }
 
-extension View {
-    public func irregularGradient(colors: [Color], backgroundColor: Color = .clear, animate: Binding<Bool> = .constant(true), speed: Double = 10) -> some View {
-        self.overlay(IrregularGradientView(colors: colors, backgroundColor: backgroundColor, animate: animate, speed: speed)).mask(self)
+public extension IrregularGradient where Background == Color {
+    init(colors: [Color], backgroundColor: Color = .clear, speed: Double = 10, shouldAnimate: Binding<Bool> = .constant(true)) {
+        self.colors = colors
+        self.background = backgroundColor
+        self.shouldAnimate = shouldAnimate
+        self.speed = speed
     }
 }
 
@@ -91,11 +56,12 @@ struct IrregularGradient_Previews: PreviewProvider {
         
         var body: some View {
             VStack {
-                RoundedRectangle(cornerRadius: 40.0, style: .continuous).irregularGradient(colors: [.orange, .pink, .yellow, .orange, .pink, .yellow], backgroundColor: .orange, animate: $animate)
-                Toggle(isOn: $animate, label: {
-                    Text("Animate")
-                }).padding()
-            }.padding(25)
+                RoundedRectangle(cornerRadius: 40.0, style: .continuous)
+                    .irregularGradient(colors: [.orange, .pink, .yellow, .orange, .pink, .yellow], backgroundColor: .orange, shouldAnimate: $animate)
+                Toggle("Animate", isOn: $animate)
+                    .padding()
+            }
+            .padding(25)
         }
     }
 }
