@@ -1,4 +1,7 @@
-<img src="../assets/title.gif" height=50 alt="IrregularGradient"/>
+<h1> IrregularGradient
+  <img align="right" alt="Project logo" src="../assets/icon-small.png" width=74px>
+</h1>
+
 <p>
     <img src="https://img.shields.io/badge/iOS-13.0+-blue.svg" />
     <img src="https://img.shields.io/badge/-SwiftUI-red.svg" />
