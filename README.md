@@ -1,5 +1,8 @@
 <h1> IrregularGradient
-  <img align="right" alt="Project logo" src="../assets/icon-small.png" width=74px>
+  <picture>
+  <source media="(prefers-color-scheme: dark)" srcset="https://github.com/joogps/IrregularGradient/blob/assets/Icon-dark-small.png?raw=true">
+    <img align="right" alt="Project logo" src="../assets/Icon-light-small.png" width=74px>
+  </picture>
 </h1>
 
 <p>
