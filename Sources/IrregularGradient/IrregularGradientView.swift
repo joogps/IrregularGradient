@@ -16,15 +16,18 @@ public struct IrregularGradientView: View {
     
     public init(colors: [Color],
                 backgroundColor: Color = .clear,
-                animate: Binding<Bool> = .constant(true),
+                animate: Bool = true,
                 speed: Double = 1) {
         self.colors = colors
         self.backgroundColor = backgroundColor
-        self.animate = animate.wrappedValue
+        self.animate = animate
         self.speed = speed
     }
     
     public var body: some View {
-        IrregularGradient(colors: colors, background: backgroundColor, speed: speed, shouldAnimate: animate)
+        IrregularGradient(colors: colors,
+                          background: backgroundColor,
+                          speed: speed,
+                          animate: animate)
     }
 }
