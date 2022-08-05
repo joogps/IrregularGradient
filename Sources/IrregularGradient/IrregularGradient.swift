@@ -9,16 +9,30 @@ import SwiftUI
 import Combine
 
 public struct IrregularGradient<Background: View>: View {
-    var colors: [Color]
+    @State var blobs: [Blob]
     var background: Background
     var speed: Double
-    var shouldAnimate: Binding<Bool>
+    var shouldAnimate: Bool
     
-    public init(colors: [Color], background: @autoclosure @escaping () -> Background, speed: Double = 10, shouldAnimate: Binding<Bool> = .constant(true)) {
-        self.colors = colors
+    private let timer: Publishers.Autoconnect<Timer.TimerPublisher>
+    
+    public init(colors: [Color],
+                background: @autoclosure @escaping () -> Background,
+                speed: Double = 1,
+                shouldAnimate: Bool = true) {
+        self._blobs = State(initialValue: colors.map({ Blob(color: $0) }))
+        
+        
         self.background = background()
         self.shouldAnimate = shouldAnimate
         self.speed = speed
+        
+        let interval = 1.0/self.speed
+        self.timer = Timer.publish(every: interval, on: .main, in: .common).autoconnect()
+    }
+    
+    private var animation: Animation {
+        .spring(response: 3.0/speed, blendDuration: 1.0/speed)
     }
     
     public var body: some View {
@@ -26,23 +40,42 @@ public struct IrregularGradient<Background: View>: View {
             ZStack {
                 background
                 ZStack {
-                    ForEach(0..<colors.count) { index in
-                        Blob(color: colors[index], animate: shouldAnimate.wrappedValue, speed: speed, geometry: geometry)
+                    ForEach(blobs) { blob in
+                        BlobView(blob: blob,
+                             geometry: geometry)
                     }
-                }
-                .blur(radius: pow(min(geometry.size.width, geometry.size.height), 0.75))
+                }.compositingGroup()
+                    .blur(radius: pow(min(geometry.size.width, geometry.size.height), 0.65))
             }
             .clipped()
+        }.onAppear {
+            update()
+        }
+        .onReceive(timer) { _ in
+            update()
+        }
+        .animation(animation, value: blobs)
+    }
+    
+    func update() {
+        guard shouldAnimate else { return }
+        for index in blobs.indices {
+            blobs[index].position = Blob.makePosition()
+            blobs[index].scale = Blob.makeScale()
+            blobs[index].opacity = Blob.makeOpacity()
         }
     }
 }
 
 public extension IrregularGradient where Background == Color {
-    init(colors: [Color], backgroundColor: Color = .clear, speed: Double = 10, shouldAnimate: Binding<Bool> = .constant(true)) {
-        self.colors = colors
-        self.background = backgroundColor
-        self.shouldAnimate = shouldAnimate
-        self.speed = speed
+    init(colors: [Color],
+         backgroundColor: Color = .clear,
+         speed: Double = 1,
+         shouldAnimate: Bool = true) {
+        self.init(colors: colors,
+                  background: backgroundColor,
+                  speed: speed,
+                  shouldAnimate: shouldAnimate)
     }
 }
 
@@ -57,7 +90,9 @@ struct IrregularGradient_Previews: PreviewProvider {
         var body: some View {
             VStack {
                 RoundedRectangle(cornerRadius: 30.0, style: .continuous)
-                    .irregularGradient(colors: [.orange, .pink, .yellow, .orange, .pink, .yellow], backgroundColor: .orange, shouldAnimate: $animate)
+                    .irregularGradient(colors: [.orange, .pink, .yellow, .orange, .pink, .yellow],
+                                       backgroundColor: .orange,
+                                       shouldAnimate: animate)
                 Toggle("Animate", isOn: $animate)
                     .padding()
             }

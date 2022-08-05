@@ -11,26 +11,20 @@ import SwiftUI
 public struct IrregularGradientView: View {
     var colors: [Color]
     var backgroundColor: Color
-    var animate: Binding<Bool>
+    var animate: Bool
     var speed: Double
     
-    public init(colors: [Color], backgroundColor: Color = .clear, animate: Binding<Bool> = .constant(true), speed: Double = 10) {
+    public init(colors: [Color],
+                backgroundColor: Color = .clear,
+                animate: Binding<Bool> = .constant(true),
+                speed: Double = 1) {
         self.colors = colors
         self.backgroundColor = backgroundColor
-        self.animate = animate
+        self.animate = animate.wrappedValue
         self.speed = speed
     }
     
     public var body: some View {
-        GeometryReader { geometry in
-            ZStack {
-                backgroundColor
-                ZStack {
-                    ForEach(0..<colors.count) { index in
-                        Blob(color: colors[index], animate: animate.wrappedValue, speed: speed, geometry: geometry)
-                    }
-                }.blur(radius: pow(min(geometry.size.width, geometry.size.height), 0.75))
-            }.clipped()
-        }
+        IrregularGradient(colors: colors, background: backgroundColor, speed: speed, shouldAnimate: animate)
     }
 }
