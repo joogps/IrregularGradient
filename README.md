@@ -17,23 +17,26 @@ A SwiftUI library for rendering beautiful, animated  and _irregular_ gradient vi
 
 ## Installation
 
-Since this is a Swift package, it can be installed via the Swift Package Manager. To do this, all you gotta do is open your Xcode project, add a new depedency under **File > Swift Package Manager**, search for this repo and install it. Then, it's all done!
+Since this is a Swift package, it can be installed via the Swift Package Manager. To do this, all you gotta do is open your Xcode project, add a new depedency under **File > Add Packages**, search for this repo and install it. Then, it's all done!
 
 ## Usage
 
-To use this library all you gotta do is add `import IrregularGradient` to the file you're using and then add an irregular gradient to any view you want with the `irregularGradient(colors: [Color], background: () -> View, shouldAnimate: Binding<Bool> = .constant(true), speed: Double = 10)` modifier. 
+To add an irregular gradient to your app all you gotta do is add `import IrregularGradient` to the file you're using and then use the `irregularGradient(colors: [Color], background: () -> View, shouldAnimate: Binding<Bool> = .constant(true), speed: Double = 10)` modifier. 
 
-- The first argument (and the only required one) `colors` specifies the colors of each gradient blob. Order and quantity matters, so the last color you add will always stay on top, and having two entries of the same color will create two distinct blue blobs.
-- The `background` argument defines the background of your gradient. It's a closure that returns a view, but can also just be a simple color if you use `backgroundColor` instead. Not specifying this value it will make the background transparent. 
-- `shouldAnimate` is a boolean binding that specifies wheter or not the gradient should perform its natural movement. It can be enabled and disabled dinamically, but movement will never stop abruptly.
-- The `speed` argument accepts a Double and defines how long it takes for the blobs to move and update. The smaller the value, the faster the movement.
+- The first, required, argument `colors` specifies the colors of each blob. Order and amount matters, so the colors will be stacked in the order of the array on the Z axis. Having two entries of the same color will create two completely distinct blobs of that color.
+- The `background` argument defines the background of your gradient. It's a closure that returns a view, but can also just be a simple color if you use `backgroundColor` instead. Not specifying this value it will make the background clear. 
+- `shouldAnimate` is a boolean that specifies whether or not the gradient blobs should move. It can be enabled and disabled dinamically, and movement will always slow down to a stop. The default value is `true`.
+- The `speed` argument accepts a Double and defines the speed of the movement – a 0.5 speed means the blobs will update every 2 seconds. The default value is 1.
 
 ```swift
 RoundedRectangle(cornerRadius: 30.0, style: .continuous)
     .irregularGradient(colors: [.orange, .pink, .yellow, .orange, .pink, .yellow], backgroundColor: .orange)
 ```
 
-You can also use the `IrregularGradient` view which works the exact same way except for the fact that instead of filling an already existing view, it exists in its own container.
+You can also use the `IrregularGradient` standalone view, which exists in its own container.
+
+## Implementation
+The current implementation of this package is done through the creation of blobs (SwiftUI's [Ellipse](https://developer.apple.com/documentation/swiftui/ellipse) shape) of the specified colors that move and scale randomly in the container, and are then blurred to achieve the desired effect.
 
 ### Questions
 
