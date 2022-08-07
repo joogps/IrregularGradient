@@ -72,7 +72,6 @@ public struct IrregularGradient<Background: View>: View {
 }
 
 public extension IrregularGradient where Background == Color {
-    @available(*, deprecated, message: "Replace \"backgroundColor\" with \"background\"")
     init(colors: [Color],
          backgroundColor: Color = .clear,
          speed: Double = 1,
