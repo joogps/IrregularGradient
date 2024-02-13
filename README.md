@@ -8,8 +8,8 @@
 <p>
     <img src="https://img.shields.io/badge/iOS-13.0+-blue.svg" />
     <img src="https://img.shields.io/badge/macOS-10.15+-blue.svg" />
-    <img src="https://img.shields.io/badge/tvOS-13+-blue.svg" />
-    <img src="https://img.shields.io/badge/watchOS-6+-blue.svg" />
+    <img src="https://img.shields.io/badge/tvOS-13.0+-blue.svg" />
+    <img src="https://img.shields.io/badge/watchOS-6.0+-blue.svg" />
     <br>
     <img src="https://img.shields.io/badge/-SwiftUI-red.svg" />
     <a href="https://twitter.com/joogps">
