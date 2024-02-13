@@ -44,7 +44,7 @@ irregularGradient(colors: [Color], background: () -> View, shouldAnimate: Bindin
 -  `colors` specifies the colors of each blob. Order and amount matters, so the colors will be stacked in the order of the array on the Z axis. Having two entries of the same color will create two completely distinct blobs of that color.
 -  `background` defines the background of your gradient. It's a closure that returns a view. Not specifying this value it will make the background clear. 
 - `shouldAnimate` is a boolean that specifies whether or not the gradient blobs should move. It can be enabled and disabled dinamically, and movement will always slow down to a stop. The default value is `true`.
-- `speed` accepts a Double and defines the speed of the movement – a 0.5 speed means the blobs will update every 2 seconds. The default value is 1.
+- `speed` accepts a Double and defines the speed of the movement — a 0.5 speed means the blobs will update every 2 seconds. The default value is 1.
 
 You can also use the `IrregularGradient` standalone view, which exists in its own container.
 
