@@ -8,7 +8,7 @@
 import SwiftUI
 
 extension View {
-    /// Replace view's contents with a gradient.
+    /// Replace a view's contents with a gradient.
     ///
     /// - Parameters:
     ///   - colors: The colors of the blobs in the gradient.
